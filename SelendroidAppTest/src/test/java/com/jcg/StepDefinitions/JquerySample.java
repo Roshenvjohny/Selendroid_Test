@@ -1,5 +1,8 @@
 package com.jcg.StepDefinitions;
 
+
+
+
 //import java.awt.List;
 
 import java.io.File;
@@ -15,6 +18,8 @@ import java.util.Date;
 import java.util.List;
 
 import java.util.concurrent.TimeUnit;
+
+
 
 import org.openqa.selenium.Alert;
 
@@ -50,68 +55,153 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import org.testng.Assert;
 
+
+
 //import com.excel.utility.Xls_Reader;
 
 import com.google.common.io.Files;
 
+
+
 public class JquerySample {
 
-	static WebDriver driver;
+     // making the driver as global so that it can be accessed anywhere in the program.
 
-	public static void main(String[] args) throws InterruptedException, IOException {
+            static WebDriver driver;
 
-		System.setProperty("webdriver.chrome.driver", "C://SELENIUM//chromedriver.exe");
+     public static void main(String[] args) throws InterruptedException, IOException {
 
-		driver = new ChromeDriver();
+           
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            System.setProperty("webdriver.chrome.driver", "C://SELENIUM//chromedriver.exe");
 
-		driver.get("https://jqueryui.com/");
+           
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+         driver = new ChromeDriver();
 
-		driver.manage().window().maximize();
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-		Thread.sleep(3000);
+            driver.get("https://jqueryui.com/");
 
-		// selecting the selectable link from jqueryui page
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-		driver.findElement(By.xpath("//a[contains(@href,'https://jqueryui.com/selectable/')]")).click();
+            driver.manage().window().maximize();
 
-		driver.switchTo().frame(0);
+            Thread.sleep(3000);
 
-		// keepig all the selectable options inside the list.
+           
 
-		List<WebElement> list = driver.findElements(By.cssSelector("ol#selectable *"));
+            //selecting the droppable link from the jqueryui page
 
-		Actions act = new Actions(driver);
+       driver.findElement(By.xpath("//a[contains(@href,'https://jqueryui.com/droppable/')]")).click();
 
-		// performing the selection of holding the mouse and select the items/elements
-		// from thr list without releasing the mouse. on selection of element 7 , the
-		// mouse is released.
+           
 
-		act.clickAndHold(list.get(1)).clickAndHold(list.get(3)).clickAndHold(list.get(7)).release().build().perform();
+            // webelement on which drag operation needs to be performed
 
-		driver.findElement(By.xpath("//a[contains(@href,'https://jqueryui.com/controlgroup/')]")).click();
+            WebElement fromElement = driver.findElement(By.xpath("//p[contains(text(),'Drag me to my target')]"));
 
-		Select car = new Select(driver.findElement(By.id("car-type-button")));
+           
 
-		car.selectByVisibleText("SUV");
+            //webelement to which the above object is dropped
 
-		driver.findElement(By.xpath("//input[@id=\"transmission-automatic\"]")).click();
+            WebElement toElement = driver.findElement(By.xpath("//p[contains(text(),'Drag here')]"));
 
-		driver.findElement(By.xpath("//input[@id='insurance']")).click();
+           
 
-		Select car2 = new Select(driver.findElement(By.id("transmission-standard-v")));
+            //creating object of Action class
 
-		car.selectByVisibleText("Trunk");
+            Actions builder = new Actions(driver);
 
-		driver.findElement(By.xpath("//input[@id=\"transmission-automatic\"]")).click();
+           
 
-		driver.findElement(By.xpath("//input[@id='insurance']")).click();
+            // drag and drop action
 
-		driver.close();
+            Action dragandDrop =builder.clickAndHold(fromElement).moveToElement(toElement).release(toElement).build();
 
-	}
+           
+
+            //performing the drag and drop action
+
+            dragandDrop.perform();
+
+           
+
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+           
+
+            // selecting the selectable link from jqueryui page
+
+           
+
+                   driver.findElement(By.xpath("//a[contains(@href,'https://jqueryui.com/selectable/')]")).click();
+
+                         driver.switchTo().frame(0);
+
+                        
+
+                         // keepig all the selectable options inside the list.
+
+                         List <WebElement> list= driver.findElements(By.cssSelector("ol#selectable *"));
+
+                         Actions act=new Actions(driver) ;
+
+                        
+
+                         //performing the selection of holding the mouse and select the items/elements from thr list without releasing the mouse. on selection of element 7 , the mouse is released. 
+
+                   act.clickAndHold(list.get(1)).clickAndHold(list.get(3)).clickAndHold(list.get(7)).release().build().perform();      
+
+                        
+
+                        
+
+                   driver.findElement(By.xpath("//a[contains(@href,'https://jqueryui.com/controlgroup/')]")).click();
+
+                         //selecting the car as SUV
+
+                         Select car =new Select(driver.findElement(By.id("car-type-button")));
+
+                         car.selectByVisibleText("SUV");
+
+                         //clicking on automatic
+
+                         driver.findElement(By.xpath("//input[@id=\"transmission-automatic\"]")).click();
+
+                         //clicking on the checkbox-insurace
+
+                         driver.findElement(By.xpath("//input[@id='insurance']")).click();
+
+                        
+
+                         //selecting the car as trunk
+
+                         Select car2 =new Select(driver.findElement(By.id("transmission-standard-v")));
+
+                         car.selectByVisibleText("Trunk");
+
+                         //clicking on automatic
+
+                         driver.findElement(By.xpath("//input[@id=\"transmission-automatic\"]")).click();
+
+                         //clicking on the checkbox-insurace
+
+                         driver.findElement(By.xpath("//input[@id='insurance']")).click();
+
+                        
+
+                         driver.close();
+
+           
+
+           
+
+           
+
+     }
 
 }
+
+
+
